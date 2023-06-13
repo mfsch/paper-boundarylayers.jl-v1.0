@@ -6,7 +6,7 @@ pandocbin = $(tooldir)/pandoc-$(pandocversion)/bin/pandoc
 pandoccmd = $(pandocbin) "$<" --standalone --wrap=preserve --natbib
 latexcmd = env TEXINPUTS=$(shell kpsewhich -var-value TEXINPUTS):../../../templates pdflatex --halt-on-error --interaction=batchmode
 bibtexcmd = env BSTINPUTS="../../../templates:$(shell kpsewhich -var-value BSTINPUTS)" bibtex
-lastrev := 0000000 # for latex diffs
+lastrev := 361df51 # for latex diffs
 
 
 # --- PHONY TARGETS ---------------------------- #
@@ -79,16 +79,15 @@ draft: $(tmpdir)/manuscript.tex # only run one pass
 
 $(tmpdir)/manuscript-$(strip $(lastrev)).tex:
 	mkdir -p $(@D)
-	git show $(strip $(lastrev)):manuscript.md | \
+	git show $(strip $(lastrev)):./manuscript.md | \
 		$(pandocbin) --output="$@" --standalone --wrap=preserve \
 		--natbib --metadata=bibliography:../../references.bib \
-		--lua-filter="../templates/outline.lua" --lua-filter="../templates/linenomath.lua" \
-		--template="../templates/manuscript-draft.tex" --metadata=graphics \
-		"--metadata=date:$$(date '+%-d %b %Y')"
+		--lua-filter="../templates/outline.lua" \
+		--template="../templates/manuscript-gmd.tex"
 
-$(tmpdir)/manuscript-diff.tex: $(tmpdir)/manuscript.tex $(tmpdir)/manuscript-$(strip $(lastrev)).tex
+$(tmpdir)/manuscript-diff.tex: $(tmpdir)/manuscript-gmd.tex $(tmpdir)/manuscript-$(strip $(lastrev)).tex
 	echo '\RequirePackage[2019/11/18]{latexrelease}' > $@
-	latexdiff $(word 2,$^) $< >> $@
+	latexdiff --append-textcmd="codeavailability" $(word 2,$^) $< >> $@
 
 manuscript-diff.pdf: $(tmpdir)/manuscript-diff.tex
 	mkdir -p $(@D)
