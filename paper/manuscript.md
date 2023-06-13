@@ -36,8 +36,8 @@ acknowledgements: |
   We acknowledge the financial support from the NSERC (Canada), the Swiss National Science Foundation, the Department of Civil Engineering and Engineering Mechanics at Columbia University, Monash University, and the University of Rhode Island.
   This work made use of the Stampede2 system at the Texas Advanced Computing Center (TACC) through the Extreme Science and Engineering Discovery Environment \citep[XSEDE;][]{Towns+2014}, which is supported by National Science Foundation grant number ACI-1548562.
 availability: |
-  BoundaryLayerDynamics.jl is open source software and is available under the terms of the MIT license\footnote{\url{https://opensource.org/licenses/MIT}}.
-  The version described in this article is archived in @Schmid2023a whereas active development takes place on GitHub\footnote{\url{https://github.com/efpl-columbia/BoundaryLayerDynamics.jl}}.
+  BoundaryLayerDynamics.jl is open source software and available under the MIT License\footnote{\url{https://opensource.org/licenses/MIT}} through the official Julia package repository and on GitHub\footnote{\url{https://github.com/efpl-columbia/BoundaryLayerDynamics.jl}}, where the public repository of the package is currently hosted.
+  The version described in this article is archived on Zenodo [@Schmid2023a].
   The data and code required to reproduce this paper are available in @Schmid+2023a.
 keywords:
 - large-eddy simulation
@@ -178,7 +178,8 @@ The details of the numerical methods are described in section \ref{sec:numerics}
 The implementation is validated via a number of automated tests as described in section \ref{sec:validation}, where we also present a validation against DNS and LES results computed with different codes.
 The performance analysis presented in section \ref{sec:performance} shows that the computational cost is comparable to a Fortran implementation of the same numerical approach and that parallel performance scales favorably up to the maximum supported number of parallel processes.
 
-BoundaryLayerDynamics.jl is open source software and available under the MIT License [@Schmid2023a].
+BoundaryLayerDynamics.jl is open source software and available under the MIT License\footnote{\url{https://opensource.org/licenses/MIT}} through the official Julia package repository and on GitHub\footnote{\url{https://github.com/efpl-columbia/BoundaryLayerDynamics.jl}}, where the public repository of the package is currently hosted.
+The version described in this article is archived on Zenodo [@Schmid2023a].
 
 # Governing equations and numerical methods {#sec:numerics}
 
