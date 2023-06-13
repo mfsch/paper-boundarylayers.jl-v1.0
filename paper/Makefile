@@ -87,7 +87,7 @@ $(tmpdir)/manuscript-$(strip $(lastrev)).tex:
 
 $(tmpdir)/manuscript-diff.tex: $(tmpdir)/manuscript-gmd.tex $(tmpdir)/manuscript-$(strip $(lastrev)).tex
 	echo '\RequirePackage[2019/11/18]{latexrelease}' > $@
-	latexdiff --append-textcmd="codeavailability" $(word 2,$^) $< >> $@
+	latexdiff --append-textcmd="codeavailability,codedataavailability" $(word 2,$^) $< >> $@
 
 manuscript-diff.pdf: $(tmpdir)/manuscript-diff.tex
 	mkdir -p $(@D)
