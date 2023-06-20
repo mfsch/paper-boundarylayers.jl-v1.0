@@ -74,7 +74,7 @@ header-includes:
 - '\newcommand{\pdvinline}[2]{\partial #1 / \partial #2}'
 - '\newcommand{\pdvn}[1]{\frac{\partial}{\partial #1}}'
 - '\newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}'
-- '\newcommand{\pdvd}[3]{\frac{\partial #1}{\partial #2 \partial #3}}'
+- '\newcommand{\pdvd}[3]{\frac{\partial^2 #1}{\partial #2 \partial #3}}'
 - '\newcommand{\qq}[1]{\quad \text{#1} \quad}'
 - '\newcommand{\qqr}[1]{\text{#1} \quad}'
 - '\newcommand{\vb}[1]{\boldsymbol{#1}}'
@@ -205,7 +205,7 @@ It is well-established that the Navier–Stokes equations are an extremely accur
 Since these conditions are met for atmospheric boundary-layer flows, the incompressible Navier–Stokes equations,
 \begin{equation}
   \pdv{u_i}{t} + u_j \left( \pdv{u_i}{x_j} - \pdv{u_j}{x_i} \right) =
-  \frac{1}{\re} \pdv{u_i}{x_j}{x_j}
+  \frac{1}{\re} \pdvd{u_i}{x_j}{x_j}
   - \pdv{p}{x_i}
   + f_i
   \qq{and}
