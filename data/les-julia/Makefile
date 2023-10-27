@@ -1,7 +1,7 @@
 simdir := ../../code/validation
 tmpdir := .cache
 juliacmd := julia --project="$(simdir)"
-mpiprocs := 32
+mpiprocs := 64
 
 .DEFAULT_GOAL := snapshots
 

@@ -4,7 +4,7 @@ domain_size.y: 4.1887902047863905
 domain_size.z: 1.0
 
 # time stepping
-number_of_time_steps: 1000000 # 10_000 * 100
+number_of_time_steps: 2500000 # 10_000 * 250
 time_step_size: 0.0001
 number_of_transitional_steps: 0
 transitional_steps_factor: 1.0

@@ -26,7 +26,7 @@ const cfg = (
 	ftpath = "../../data/les-fortran",
 	outfile = "../../data/les-profiles.h5",
 	dims = (64, 64, 64),
- 	subset = 41:200, # takes about 20s
+ 	subset = 101:500, # may take a few minutes
 );
 
 # ╔═╡ 76de4f32-bbfe-449c-9a23-b007fcb005e9

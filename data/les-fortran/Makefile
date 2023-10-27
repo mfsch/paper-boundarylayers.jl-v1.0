@@ -23,7 +23,8 @@ $(tmpdir)/bin/les-mpi: $(simdir)/les-fortran-setup.patch
 
 # run simulation (overwrites data)
 instantaneous-fields/grid.yaml: $(simdir)/les-fortran-config.yaml $(tmpdir)/bin/les-mpi
-	mkdir -p "$(tmpdir)"/{input,output}
+	mkdir -p "$(tmpdir)"/input
+	mkdir -p "$(tmpdir)"/output
 	ln -rsf "$<" "$(tmpdir)/input/config.yaml"
 	cd $(tmpdir) && env LES_TOTAL_LAUNCHES=1 LES_CURRENT_LAUNCH=1 OMP_NUM_THREADS=1 \
 	    mpirun -np $$(grep 'nproc =' "src/PARAM.f90" | cut -d' ' -f5) \

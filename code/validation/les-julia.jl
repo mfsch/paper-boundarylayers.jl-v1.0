@@ -17,7 +17,7 @@ function open_channel_les(; measure_only = false)
     # manually add noise with limited intensity
     BoundaryLayerDynamics.State.add_noise!(abl.state.vel1, 1e-3)
 
-    turnovers = 100
+    turnovers = 250
     steps_per_turnover = 10_000
     dt = 1/steps_per_turnover
     nt = measure_only ? 100 : turnovers * steps_per_turnover
