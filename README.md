@@ -45,6 +45,20 @@ won’t support all functionality of the Parlange–Albertson code initially, it
 should provide the dynamical core for direct numerical simulation and basic
 large-eddy simulation of turbulent channel flows.
 
+## Data & Code
+
+The repository contains the code and data required to reproduce the manuscript “BoundaryLayerDynamics.jl v1.0: a modern codebase for atmospheric boundary-layer simulations”.
+For complete reproduction including the simulation runs, the two submodules with the simulation code need to be initiated (Parlange–Albertson code requires access to private repository).
+
+- To build the manuscript, run `make manuscript`. This relies on the figures, which are included in the repository.
+- To recreate the figures, run `make figures`. This relies on the precomputed profile data in the `data` directory (HDF5 files).
+- To recompute the profiles, run `make profiles`. This relies on simulation snapshots and performance data in the `data/*` subdirectories. These are not included in the repository due to their larger size, but can be recreated with the available code.
+- To rerun validation simulations, run `make dns-julia`, `make les-julia`, or `make les-fortran`. This requires 64 MPI processes (can be reconfigured) and may take several hours.
+- To rerun performance tests, run `make perf`. This is meant to be run on the Stampede2 system and has to be adapted when running on a different system or using a different account.
+
+The data was generated with Julia 1.9 but any recent Julia version (≥1.6) should work.
+The exact versions of dependencies are given in the `Manifest.toml` files and should be downloaded automatically when using the above `make` commands.
+
 ## Goals & Milestones
 
 - [x] Feasibility study: Check whether Julia has all the required functionality
