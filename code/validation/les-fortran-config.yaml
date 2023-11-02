@@ -1,0 +1,170 @@
+# geometry
+domain_size.x: 6.283185307179586
+domain_size.y: 4.1887902047863905
+domain_size.z: 1.0
+
+# time stepping
+number_of_time_steps: 1000000 # 10_000 * 100
+time_step_size: 0.0001
+number_of_transitional_steps: 0
+transitional_steps_factor: 1.0
+
+# simulation parameters
+Re: 100000000.0 # 1e8
+
+# sub-grid stress
+# model:  1 -> static Smagorinsky
+#         2 -> dynamic Smagorinsky
+#         3 -> scale-dependent
+#         4 -> Lagrangian scale
+#         5 -> Lagrangian scale-dependent
+#         8 -> one equation
+# filter: 1 -> spectral cut-off
+#         2 -> gaussian
+#         3 -> top-hat
+sgs.active: T
+sgs.model: 1
+sgs.filter: 1
+sgs.apply_every_n_steps: 5
+sgs.initial_static_steps: 1000
+sgs.static_factor: 0.1
+sgs.wall_damping: T # for static Smagorinsky and 1.5 closure
+
+# body force (pressure gradient)
+body_force.x: 1.0 # usually set to u_star^2 / Lz
+body_force.y: 0.0
+constant_mass_flux.active: F # if set, body_force is ignored
+constant_mass_flux.u: 0.0 # perscribe mean velocity
+constant_mass_flux.v: 0.0
+
+# Coriolis
+coriolis.parameter: 0.0 # 0 when coriolis effect is turned off
+geotropic_wind.U_g: 0.0
+geotropic_wind.V_g: 0.0
+
+#################################################################
+
+# momentum IC
+ic.constant.active: F
+ic.constant.u: 0.0
+ic.constant.v: 0.0
+ic.constant.w: 0.0
+ic.log_law.active: T
+ic.log_law.u_star: 1.0
+ic.log_law.displacement_height: 0.0
+ic.geostrophic.active: F
+ic.linear.active:     F
+ic.linear.u0: 0.0
+ic.linear.dudz: 1.0
+ic.proportion_of_height_with_noise: 1.0
+ic.noise_variance_factor: 1.0
+
+# momentum BCs
+bc.lower.type:   'WALL_LAW'   # WALL_LAW, STD also for scalar field, IBM_DFA (no scalars)
+bc.upper.type:   'STD'
+bc.lower.u.type: 'DRC'        # NEU, DRC
+bc.lower.v.type: 'DRC'
+bc.lower.w.type: 'DRC'
+bc.upper.u.type: 'NEU'
+bc.upper.v.type: 'NEU'
+bc.upper.w.type: 'DRC'
+bc.lower.u.value: 0.0
+bc.lower.v.value: 0.0
+bc.lower.w.value: 0.0
+bc.upper.u.value: 0.0
+bc.upper.v.value: 0.0
+bc.upper.w.value: 0.0
+
+# roughness
+bc.lower.z0: 0.0001        # for IBM, wall law, and IC
+bc.lower.heterogeneous_surface.active: F
+bc.lower.heterogeneous_surface.path: 'input/hetero_surf_lh.csv'
+
+# immersed boundary (rotation needs Nx==Ny)
+bc.ibm.file: 'input/surface.stl'
+bc.ibm.z_shift: 0.0
+bc.ibm.z0: 0.000001
+bc.ibm.rotation_angle: 0      # 0, 180, or 270
+
+#################################################################
+
+# scalar 1
+scalar1.active: F
+scalar1.Ri: 1.0
+scalar1.Pr: 0.7
+scalar1.Pr_sgs: 0.7
+scalar1.init: 300.0
+scalar1.ddz_init: 0.0
+scalar1.nf: 0.0
+scalar1.z_turb: 0.0
+scalar1.z_ent: 1500
+scalar1.ent_init: 8.0           # this is the jump in temperature at z_ent
+scalar1.ent_ddz_init: 0.003
+scalar1.lower_bc.type: 'NEU'    #'DRC', 'NEU'
+scalar1.upper_bc.type: 'NEU'
+scalar1.lower_bc.value: 0.0
+scalar1.upper_bc.value: 0.0
+
+# scalar 2
+scalar2.active: F
+scalar2.Pr: 0.7
+scalar2.Pr_sgs: 0.7
+scalar2.init: 2.0
+scalar2.ddz_init: 0.1
+scalar2.nf: 0.0001
+scalar2.z_turb: 1.0
+scalar2.z_ent: 0.5
+scalar2.ent_init: 10.0
+scalar2.ent_ddz_init: 0.02
+scalar2.lower_bc.type: 'DRC'
+scalar2.upper_bc.type: 'NEU'
+scalar2.lower_bc.value: 1.0
+scalar2.upper_bc.value: 0.0
+
+#################################################################
+# SPECIFIC APPLICATIONS
+#################################################################
+
+# canopy layer
+canopy.dense.active: F
+canopy.dense.height: 20
+canopy.dense.profile_path: 'input/Canopy_Profile_Duke.csv'
+canopy.dense.heterogeneity_path: 'input/Canopy_Hetero_Duke.csv'
+canopy.dense.alpha: 0.0
+canopy.sparse.active: F
+canopy.sparse.drag_coeff: 0.2
+canopy.sparse.file: 'input/trees.csv'
+
+# hurricane boundary layer terms
+hbl_terms.active: F
+hbl_terms.momen: F
+hbl_terms.bryan: F
+hbl_terms.r: 60000.0
+hbl_terms.f: 0.000055
+hbl_terms.Vg: 60.0
+hbl_terms.dVgdz: -0.003
+hbl_terms.n: 0.5
+
+# slope flow
+slope_flow_terms.active: F
+slope_flow_terms.alpha: 90.0
+slope_flow_terms.dTdzs: 0.005
+slope_flow_terms.dQdzs: 0.00
+
+#################################################################
+# OUTPUT
+#################################################################
+
+output.path: '../../../data/les-fortran'
+output.full_precision: F
+output.instantaneous.active: T
+output.instantaneous.frequency: 5000
+output.instantaneous.skip: 0
+output.instantaneous.write_eddy_viscosity: T
+output.instantaneous.write_stress_tensor: T
+output.restart.read: F
+output.restart.read_path: 'input/restart-fields'
+output.restart.write: F
+output.restart.frequency: 100000
+output.restart.keep: 1
+output.diagnostic.frequency: 1000

@@ -1,0 +1,21 @@
+diff -Naur ../../code/albertson-parlange-les/src/PARAM.f90 .cache/fortran-les/src/PARAM.f90
+--- ../../code/albertson-parlange-les/src/PARAM.f90	2022-05-17 04:10:39.000000000 -0500
++++ .cache/fortran-les/src/PARAM.f90	2022-05-17 09:32:56.000000000 -0500
+@@ -22,7 +22,7 @@
+ 
+ !--mpi stuff
+ logical,parameter :: USE_MPI = .true.
+-integer,parameter :: nproc = 32
++integer,parameter :: nproc = ??
+ integer :: status(MPI_STATUS_SIZE)
+ !--this stuff must be defined, even if not using MPI
+ character (8) :: chcoord  !--holds character representation of coord
+@@ -69,7 +69,7 @@
+ !######################################################################
+ !GEOMETRY AND SPATIAL DISCRETIZATION
+ REAL(RPREC) :: L_X,L_Y,L_Z
+-INTEGER,PARAMETER :: NX=64, NY=64, NZ_TOT=65
++INTEGER,PARAMETER :: NX=256, NY=256, NZ_TOT=1281
+ INTEGER,PARAMETER :: NZ=(NZ_TOT-1)/nproc + 1
+ REAL(RPREC), DIMENSION(3),PARAMETER :: ORIGIN = (/0,0,0/) 
+ 

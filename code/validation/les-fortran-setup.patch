@@ -1,0 +1,47 @@
+diff -Naur ../../code/albertson-parlange-les/src/PARAM.f90 .cache/src/PARAM.f90
+--- ../../code/albertson-parlange-les/src/PARAM.f90	2022-08-16 12:21:49.649288130 -0400
++++ .cache/src/PARAM.f90	2022-08-17 11:50:38.977209513 -0400
+@@ -144,7 +144,7 @@
+ 
+ !BOTTOM BC
+ LOGICAL,PARAMETER ::       WALL_HOMOG_FLAG=.FALSE.,   &
+-                           WALL_INST_FLAG=.FALSE.      !AVG RATHER THAN FILT
++                           WALL_INST_FLAG=.TRUE.      !AVG RATHER THAN FILT
+ INTEGER,PARAMETER ::       U_STAR_IT=5             !PICARD FOR USTAR
+ 
+ LOGICAL,PARAMETER ::       CLIP_SGS=.TRUE.        !FOR MODEL 5 WHEN 0 GRADIENTS
+diff -Naur ../../code/albertson-parlange-les/src/input-output/instantaneous_file_output.f90 .cache/src/input-output/instantaneous_file_output.f90
+--- ../../code/albertson-parlange-les/src/input-output/instantaneous_file_output.f90	2022-08-16 12:21:49.653288174 -0400
++++ .cache/src/input-output/instantaneous_file_output.f90	2022-08-17 11:50:38.977209513 -0400
+@@ -90,9 +90,9 @@
+             output%txx = init_file_series(trim(output_path)//'/txx', first_output)
+             output%txy = init_file_series(trim(output_path)//'/txy', first_output)
+             output%txz = init_file_series(trim(output_path)//'/txz', first_output)
+-            !output%tyy = init_file_series(trim(output_path)//'/tyy', first_output)
+-            !output%tyz = init_file_series(trim(output_path)//'/tyz', first_output)
+-            !output%tzz = init_file_series(trim(output_path)//'/tzz', first_output)
++            output%tyy = init_file_series(trim(output_path)//'/tyy', first_output)
++            output%tyz = init_file_series(trim(output_path)//'/tyz', first_output)
++            output%tzz = init_file_series(trim(output_path)//'/tzz', first_output)
+         end if
+         if (tke_bdg) then
+             output%convec_tke = init_file_series(trim(output_path)//'/convec', first_output)
+@@ -155,12 +155,12 @@
+                     .true., output%write_dp)
+                 call write_field(grid, output%txz, state%txz(1:grid%nx, 1:grid%ny, 1:grid%nz-1), &
+                     .false., output%write_dp)
+-                !call write_field(grid, output%tyy, state%tyy(1:grid%nx, 1:grid%ny, 1:grid%nz-1), &
+-                !    .true., output%write_dp)
+-                !call write_field(grid, output%tyz, state%tyz(1:grid%nx, 1:grid%ny, 1:grid%nz-1), &
+-                !    .false., output%write_dp)
+-                !call write_field(grid, output%tzz, state%tzz(1:grid%nx, 1:grid%ny, 1:grid%nz-1), &
+-                !    .true., output%write_dp)
++                call write_field(grid, output%tyy, state%tyy(1:grid%nx, 1:grid%ny, 1:grid%nz-1), &
++                    .true., output%write_dp)
++                call write_field(grid, output%tyz, state%tyz(1:grid%nx, 1:grid%ny, 1:grid%nz-1), &
++                    .false., output%write_dp)
++                call write_field(grid, output%tzz, state%tzz(1:grid%nx, 1:grid%ny, 1:grid%nz-1), &
++                    .true., output%write_dp)
+             end if
+             if (tke_bdg) then
+                 call write_field(grid, output%convec_tke, convec_tke(1:grid%nx, 1:grid%ny, 1:grid%nz-1), &

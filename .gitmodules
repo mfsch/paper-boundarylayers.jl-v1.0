@@ -1,0 +1,6 @@
+[submodule "code/albertson-parlange-les"]
+	path = code/albertson-parlange-les
+	url = https://gitlab.com/efpl-columbia/codes/les-parlange
+[submodule "code/BoundaryLayerDynamics.jl"]
+	path = code/BoundaryLayerDynamics.jl
+	url = https://github.com/efpl-columbia/BoundaryLayerDynamics.jl.git
