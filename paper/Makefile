@@ -6,7 +6,7 @@ pandocbin = $(tooldir)/pandoc-$(pandocversion)/bin/pandoc
 pandoccmd = $(pandocbin) "$<" --standalone --wrap=preserve --natbib
 latexcmd = env TEXINPUTS=$(shell kpsewhich -var-value TEXINPUTS):../../../templates pdflatex --halt-on-error --interaction=batchmode
 bibtexcmd = env BSTINPUTS="../../../templates:$(shell kpsewhich -var-value BSTINPUTS)" bibtex
-lastrev := 361df51 # for latex diffs
+lastrev := deb2d3e # for latex diffs
 
 
 # --- PHONY TARGETS ---------------------------- #
@@ -49,7 +49,7 @@ $(tmpdir)/manuscript.bbl: $(tmpdir)/manuscript.aux references.bib
 
 # --- DOCUMENTS -------------------------------- #
 
-figures := $(wildcard ../figures/*)
+figures := $(wildcard ../figures/*.pdf)
 $(tmpdir)/fig%: ../figures/fig%
 	mkdir -p $(@D)
 	cp $< $@
@@ -86,8 +86,7 @@ $(tmpdir)/manuscript-$(strip $(lastrev)).tex:
 		--template="../templates/manuscript-gmd.tex"
 
 $(tmpdir)/manuscript-diff.tex: $(tmpdir)/manuscript-gmd.tex $(tmpdir)/manuscript-$(strip $(lastrev)).tex
-	echo '\RequirePackage[2019/11/18]{latexrelease}' > $@
-	latexdiff --append-textcmd="codeavailability,codedataavailability" $(word 2,$^) $< >> $@
+	latexdiff --append-safecmd="mkern,url" --append-textcmd="codeavailability,codedataavailability,mkern" $(word 2,$^) $< > $@
 
 manuscript-diff.pdf: $(tmpdir)/manuscript-diff.tex
 	mkdir -p $(@D)
