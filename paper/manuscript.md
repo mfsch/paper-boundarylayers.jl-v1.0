@@ -377,11 +377,12 @@ spatial discretization: error from non-linear advection term
 - interpolations in vertical direction → truncation error
 - sum over limited range of wavenumbers → truncation error
 ––
-The non-linear term of Eq. \eqref{eq:mom-fd} requires further approximations.
+The non-linear advection term of Eq. \eqref{eq:mom-fd} requires further approximations.
 First, some of the terms (e.g. $i=1, j=3$) are evaluated at the opposite set of vertical grid points than where they are required and have to be interpolated.
 With the simple interpolation $\hat{\phi}\left(\zeta\right) \approx 1/2 \bigl( \hat{\phi}\left(\zeta-\delta\zeta/2\right) + \hat{\phi}\left(\zeta+\delta\zeta/2\right) \bigr)$, the truncation error generally increases but remains of order $\order{\delta\zeta^2}$.
 Furthermore, the double sum can only be computed over the resolved range of wavenumbers, i.e. $\abs{\kx^\prime} \le (N_1-1)/2$ and $\abs{\ky^\prime} \le (N_2-1)/2$, producing another truncation error that decreases exponentially with the number of resolved wavenumbers.
 The same applies to the non-linear expressions involved in the evaluation of $\tau_{ij}^\mathrm{sgs}$.
+This discretization of the advection term in rotational form conserves kinetic energy in the absence of time-integration errors [@Mansour+1979] as long as the grid is uniform.
 
 spatial discretization: computation of non-linear advection term
 - FFTs to avoid expensive convolution
