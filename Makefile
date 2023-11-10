@@ -37,11 +37,11 @@ perf:
 
 # --- ARCHIVE ---------------------------------- #
 
-archive: latest.zip
+archive: project-code-and-data.zip
 
 git-commit-ids:
 	git rev-parse HEAD > $@
 	git submodule status >> $@
 
-latest.zip: git-commit-ids
-	git archive -o $@ $(foreach file,$^,--prefix=$(dir $(file)) --add-file=$(file)) --prefix= HEAD
+project-code-and-data.zip: git-commit-ids
+	git archive -o $@ $(foreach file,$^,--add-file=$(file)) --prefix= HEAD
