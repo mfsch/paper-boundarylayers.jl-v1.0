@@ -91,7 +91,7 @@ conclusions: |
   The performance is shown to be in line with a Fortran implementation of the same modelling approach.
   In fact, it even appears that easier experimentation with algorithmic approaches and implementation trade-offs might have a stronger impact on performance than the remaining computational overhead compared to highly optimized Fortran compilers.
 
-  The code also places a focus on continuous testing and minimizing the chances for errors both during development and usage.
+  The code also places a focus on automated testing and minimizing the chances for errors both during development and usage.
   This is particularly important in exploratory research, where the expected behavior of a new model or flow system is not known *a priori* and it is difficult to discern between inconspicuous errors and novel results.
 
   The code provides the core functionality for both direct numerical simulation and large-eddy simulation in channel-flow geometries.
@@ -577,9 +577,9 @@ For the former, the spatial discretization is exact so the test case verifies th
 
 ## general details about automated tests {.outline}
 
-The automated tests can be re-run whenever changes are made.
-By default, tests are run in single-process (serial) mode as well as in multi-process (parallel) mode and multi-process tests are run both with a vertical resolution greater than and equal to the number of processes since those configurations sometimes rely on different code paths.
-The tests can be run on consumer hardware used for code development, although it is recommended to have at least four CPU cores as some MPI implementations struggle when cores are oversubscribed.
+The above test cases have been verified in single-process (serial) mode as well as in multi-process (parallel) mode.
+Multi-process tests are run both with a vertical resolution greater than and equal to the number of processes since those configurations sometimes rely on different code paths.
+Since the tests are automated and run within minutes on consumer hardware, they can be rerun whenever changes are made to the code to ensure that any future version of the code still satisfies all the tested properties.
 
 ## turbulent flow validation {.outline}
 
