@@ -155,7 +155,7 @@ goals of this project
 - goals: basic functionality for dns & les of turbulent channel flow, high performance (similar to existing), high expandability, high correctness both now & in future
 - methods: Julia, automated tests, orthogonal functionality
 ––
-In this paper, we present and discuss BoundaryLayerDynamics.jl, a new code for turbulence-resolving flow simulation optimized for ABL research.
+In this paper, we present and discuss BoundaryLayerDynamics.jl [@Schmid2023a], a new code for turbulence-resolving flow simulation optimized for ABL research.
 The code has been written to provide core functionality for DNS and LES of channel-flow configurations with a focus on making it easy to use, adapt, and extend the code without jeopardizing the correctness of the results.
 To achieve better trade-offs along these dimensions, the implementation relies on the Julia programming language, on automated testing, and on a modular design.
 
