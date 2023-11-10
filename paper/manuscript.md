@@ -254,7 +254,7 @@ In the following, the same notation is used to represent both the unfiltered (DN
 The past decades have seen several efforts to develop a suitable model for $\tau_{ij}^\mathrm{sgs}$ [@Smagorinsky1963; @Schumann1975; @BardinaFerzigerReynolds1980; @Germano+1991; @MeneveauLundCabot1996; @PorteAgelMeneveauParlange2000; @BouZeidMeneveauParlange2005].
 The current implementation includes the static @Smagorinsky1963 subgrid-scale model
 \begin{equation}
-  \tau_{ij}^\mathrm{sgs} \approx
+  \tau_{ij}^\mathrm{sgs} =
   - 2 l_\mathrm{S}^2 \mathcal{S} S_{ij}
   \,,
 \end{equation}
@@ -322,7 +322,7 @@ A number of engineering flows such as smooth-wall open and closed channel flows 
 The complex boundaries of atmospheric flows can require significant modeling effort and simulations generally have to partially resolve surfaces (e.g. immersed boundary method, terrain-following coordinates) or represent their effect with a wall model for $\tau_{i3}^\mathrm{sgs}$, usually formulated for the discretized equations [@PiomelliBalaras2002].
 The current implementation includes an algebraic equilibrium rough-wall model defined similar to @MasonCallen1986 with
 \begin{equation}
-  \tau_{i3}^\mathrm{sgs}(x_3=0) \approx
+  \tau_{i3}^\mathrm{sgs}(x_3=0) =
   \frac{-\kappa^2 \sqrt{u_1(x_3^\mathrm{ref})^2 + u_2(x_3^\mathrm{ref})^2}}
   {\log(x_3^\mathrm{ref} / z_0)^2} u_i(x_3^\mathrm{ref})
 \end{equation}
@@ -366,7 +366,7 @@ For the vertical derivative $\hat{D}_3^{\kx\ky}$, we use central second-order fi
 \begin{equation}
   \eval{\hat{D}_3^{\kx\ky} \hat{\phi}^{\kx\ky}}_{\zeta}
   = \eval{\dv{\zeta}{x_3}}_\zeta \eval{\pdv{\hat{\phi}^{\kx\ky}}{\zeta}}_\zeta
-  \approx \eval{\dv{\zeta}{x_3}}_\zeta \frac{\hat{\phi}^{\kx\ky}(\zeta + \delta \zeta / 2) - \hat{\phi}^{\kx\ky}(\zeta - \delta \zeta / 2)}{\delta \zeta}
+  = \eval{\dv{\zeta}{x_3}}_\zeta \frac{\hat{\phi}^{\kx\ky}(\zeta + \delta \zeta / 2) - \hat{\phi}^{\kx\ky}(\zeta - \delta \zeta / 2)}{\delta \zeta} + \order{\delta \zeta^2}
 \end{equation}
 for any field $\phi$, where $\delta\zeta \equiv 1/N_3$ is the grid spacing in the $\zeta$ coordinate.
 Vertical derivatives are therefore evaluated at the opposite set of grid points to the ones where $\phi$ is defined, as typical for staggered grids.
@@ -379,7 +379,7 @@ spatial discretization: error from non-linear advection term
 ––
 The non-linear advection term of Eq. \eqref{eq:mom-fd} requires further approximations.
 First, some of the terms (e.g. $i=1, j=3$) are evaluated at the opposite set of vertical grid points than where they are required and have to be interpolated.
-With the simple interpolation $\hat{\phi}\left(\zeta\right) \approx 1/2 \bigl( \hat{\phi}\left(\zeta-\delta\zeta/2\right) + \hat{\phi}\left(\zeta+\delta\zeta/2\right) \bigr)$, the truncation error generally increases but remains of order $\order{\delta\zeta^2}$.
+With the simple interpolation $\hat{\phi}\left(\zeta\right) = 1/2 \bigl( \hat{\phi}\left(\zeta-\delta\zeta/2\right) + \hat{\phi}\left(\zeta+\delta\zeta/2\right) \bigr) + \order{\delta \zeta^2}$, the truncation error generally increases but remains of order $\order{\delta\zeta^2}$.
 Furthermore, the double sum can only be computed over the resolved range of wavenumbers, i.e. $\abs{\kx^\prime} \le (N_1-1)/2$ and $\abs{\ky^\prime} \le (N_2-1)/2$, producing another truncation error that decreases exponentially with the number of resolved wavenumbers.
 The same applies to the non-linear expressions involved in the evaluation of $\tau_{ij}^\mathrm{sgs}$.
 This discretization of the advection term in rotational form conserves kinetic energy in the absence of time-integration errors [@Mansour+1979] as long as the grid is uniform.
@@ -412,7 +412,7 @@ summary of spatial discretization: semi-discrete equations
 ––
 Combining the velocity components into a single vector $\vfd{u}$ of length $N_1 \times N_2 \times (3 N_3 - 1)$, the spatially discretized momentum equation can be written as
 \begin{equation}
-  \dv{\vfd{u}}{t} \approx \Op{Adv}(\vfd{u}) + \frac{1}{\re} \Delta \vfd{u} + \frac{1}{\re} \vfd{b}_\Delta - \Op{G} \vfd{p} + \vfd{f}
+  \dv{\vfd{u}}{t} = \Op{Adv}(\vfd{u}) + \frac{1}{\re} \Delta \vfd{u} + \frac{1}{\re} \vfd{b}_\Delta - \Op{G} \vfd{p} + \vfd{f}
   \,.
   \label{eq:mom-vec}
 \end{equation}
@@ -422,7 +422,7 @@ $\Op{G}$ is the linear operator that computes the gradient of the pressure, disc
 The forcing term $\vfd{f}$, a vector of the same length as $\vfd{u}$, can be constant in time and space (e.g. pressure-driven channel flow), vary in time only (e.g. constant-mass-flux channel flow), vary in space only (e.g. baroclinic flow), or even vary in time and space as a function of $\vfd{u}$, which can be used to model vegetation drag or to represent complex geometry with an immersed-boundary method.
 The discrete continuity equation,
 \begin{equation}
-  \Op{D} \vfd{u} + \vfd{b}_\mathrm{D} \approx 0
+  \Op{D} \vfd{u} + \vfd{b}_\mathrm{D} = 0
   \,,
   \label{eq:cont-vec}
 \end{equation}
