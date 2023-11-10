@@ -654,7 +654,7 @@ The friction Reynolds number $\re_\tau = u_\tau h/\nu$ is based on the channel h
 The lower surface is characterized by a roughness length $z_0$ that results in a non-dimensional channel height of $h/z_0 = 10^4$.
 The solution is computed in a domain of size $2 \pi h$ in streamwise and $(4/3) \pi h$ in cross-stream direction.
 The velocity field is discretized with $63 \times 63$ Fourier modes at $64$ equidistant vertical grid points.
-The mean statistics computed over $80$ large-eddy turnover times $T_\tau = h/u_\tau$ after a spin-up time of $20\,T_\tau$ closely match for the two separate implementations.
+The mean statistics computed over $200$ large-eddy turnover times $T_\tau = h/u_\tau$ after a spin-up time of $50\,T_\tau$ closely match for the two separate implementations.
 
 ## conclusion of validation {.outline}
 
