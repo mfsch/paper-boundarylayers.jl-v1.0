@@ -19,7 +19,7 @@ shortauthor: Schmid et al.
 institute:
 - name: Dept. of Civil Engineering, University of British Columbia, Vancouver, Canada
 - name: Dept. of Civil Engineering & Engineering Mechanics, Columbia University, New York, NY, USA
-- name: Department of Civil Engineering, Monash University, Melbourne, VIC, Australia
+- name: Dept. of Civil Engineering, Monash University, Melbourne, VIC, Australia
 - name: University of Rhode Island, Kingston, RI, USA
 abstract: |
   \noindent
