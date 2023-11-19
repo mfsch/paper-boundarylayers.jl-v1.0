@@ -13,10 +13,11 @@ lastrev := deb2d3e # for latex diffs
 
 .DEFAULT_GOAL := help
 .PHONY: help default watch manuscript draft gmd diff
+.PRECIOUS: build/manuscript-%.tex
 default: gmd
-manuscript: manuscript-latest.pdf
-gmd: manuscript-gmd.pdf
-diff: manuscript-diff.pdf
+manuscript: build/manuscript-latest.pdf
+gmd: build/manuscript-gmd.pdf
+diff: build/manuscript-diff.pdf
 
 help:
 	@echo 'Run `make <goal>` with one of these goals:'
@@ -65,7 +66,7 @@ $(tmpdir)/manuscript.tex: manuscript.md ../templates/manuscript-draft.tex ../tem
 $(tmpdir)/manuscript.aux: $(tmpdir)/manuscript.tex
 	cd $(<D) && $(latexcmd) --draftmode $(notdir $<)
 
-manuscript-latest.pdf: $(tmpdir)/manuscript.tex $(tmpdir)/manuscript.bbl
+build/manuscript-latest.pdf: $(tmpdir)/manuscript.tex $(tmpdir)/manuscript.bbl
 	mkdir -p $(@D)
 	cd $(dir $<) && $(latexcmd) --draftmode $(notdir $<) && $(latexcmd) $(notdir $<)
 	mv "$(<:.tex=.pdf)" $@
@@ -88,8 +89,9 @@ $(tmpdir)/manuscript-$(strip $(lastrev)).tex:
 $(tmpdir)/manuscript-diff.tex: $(tmpdir)/manuscript-gmd.tex $(tmpdir)/manuscript-$(strip $(lastrev)).tex
 	latexdiff --append-safecmd="mkern,url" --append-textcmd="codeavailability,codedataavailability,mkern" $(word 2,$^) $< > $@
 
-manuscript-diff.pdf: $(tmpdir)/manuscript-diff.tex
+build/manuscript-diff.pdf: $(tmpdir)/manuscript-diff.tex
 	mkdir -p $(@D)
+	cp -t $(tmpdir) references.bib
 	cd $(<D) && $(latexcmd) --draftmode $(notdir $<)
 	cd $(<D) && $(bibtexcmd) $(basename $(notdir $<))
 	cd $(dir $<) && $(latexcmd) --draftmode $(notdir $<) && $(latexcmd) $(notdir $<)
@@ -98,19 +100,22 @@ manuscript-diff.pdf: $(tmpdir)/manuscript-diff.tex
 
 # --- LATEX JOURNAL TEMPLATES ------------------ #
 
-$(tmpdir)/manuscript-%.tex: manuscript.md ../templates/manuscript-%.tex $(wildcard ../templates/*.lua) \
-    $(patsubst ../figures/%,$(tmpdir)/%,$(figures)) | $(pandocbin)
+build/manuscript-%.tex: manuscript.md ../templates/manuscript-%.tex $(wildcard ../templates/*.lua) | $(pandocbin)
 	mkdir -p $(@D)
-	$(pandoccmd) --output="$@" --metadata=bibliography:../../references.bib \
+	$(pandoccmd) --output="$@" --metadata=bibliography:references.bib \
 	    --lua-filter="../templates/outline.lua" --template="../templates/manuscript-$*.tex"
-	cp $@ $@.bkp
 
-manuscript-%.pdf: $(tmpdir)/manuscript-%.tex
+$(tmpdir)/manuscript-%.tex: build/manuscript-%.tex
 	mkdir -p $(@D)
-	cd $(<D) && $(latexcmd) --draftmode $(notdir $<)
-	cd $(<D) && $(bibtexcmd) $(basename $(notdir $<))
-	cd $(dir $<) && $(latexcmd) --draftmode $(notdir $<) && $(latexcmd) $(notdir $<)
-	mv "$(<:.tex=.pdf)" $@
+	cp $< $@
+
+build/manuscript-%.pdf: build/manuscript-%.tex $(patsubst ../figures/%,$(tmpdir)/%,$(figures))
+	mkdir -p $(@D) $(tmpdir)
+	cp -t $(tmpdir) $< references.bib
+	cd $(tmpdir) && $(latexcmd) --draftmode manuscript-$*.tex
+	cd $(tmpdir) && $(bibtexcmd) manuscript-$*
+	cd $(tmpdir) && $(latexcmd) --draftmode manuscript-$*.tex && $(latexcmd) manuscript-$*.tex
+	mv "$(tmpdir)/manuscript-$*.pdf" $@
 
 
 # --- SOFTWARE TOOLS --------------------------- #
