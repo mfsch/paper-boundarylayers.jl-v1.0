@@ -1,11 +1,10 @@
 ---
 title: 'BoundaryLayerDynamics.jl v1.0: a modern codebase for atmospheric boundary-layer simulations'
-correspondence: Manuel F. Schmid, m.schmid@civil.ubc.ca
+correspondence: Manuel F. Schmid (mfs2173@columbia.edu) and Marco G. Giometto (mg3929@columbia.edu)
 author:
 - name: Schmid
   firstname: Manuel F.
   institute: 1,2
-  correspondence: mfs2173@columbia.edu
 - name: Giometto
   firstname: Marco G.
   institute: 2
@@ -14,13 +13,12 @@ author:
   institute: 1
 - name: Parlange
   firstname: Marc B.
-  institute: 3,4
+  institute: 3
 shortauthor: Schmid et al.
 institute:
-- name: Dept. of Civil Engineering, University of British Columbia, Vancouver, Canada
+- name: Dept. of Civil Engineering, University of British Columbia, Vancouver, BC, Canada
 - name: Dept. of Civil Engineering & Engineering Mechanics, Columbia University, New York, NY, USA
-- name: Dept. of Civil Engineering, Monash University, Melbourne, VIC, Australia
-- name: University of Rhode Island, Kingston, RI, USA
+- name: Depts. of Mechanical, Ocean, Civil and Environmental Engineering, University of Rhode Island, Kingston, RI, USA
 abstract: |
   \noindent
   We present BoundaryLayerDynamics.jl, a new code for turbulence-resolving simulations of atmospheric boundary-layer flows as well as canonical turbulent flows in channel geometries.

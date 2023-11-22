@@ -100,9 +100,7 @@ $endfor$
 %% If authors contributed equally, please mark the respective author names with an asterisk, e.g. "\Author[2,*]{Anton}{Smith}" and "\Author[3,*]{Bradley}{Miller}" and add a further affiliation: "\affil[*]{These authors contributed equally to this work.}".
 
 
-$for(author)$$if(it.correspondence)$
-\correspondence{$it.firstname$ $it.name$ ($it.correspondence$)}
-$endif$$endfor$
+\correspondence{$correspondence$}
 
 \runningtitle{$if(shorttitle)$$shorttitle$$else$$title$$endif$}
 
